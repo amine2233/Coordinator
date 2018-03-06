@@ -12,8 +12,8 @@ public protocol RootViewCoordinatorProvider: class {
     var rootViewController: NSViewController { get }
 }
 
-extension RootViewCoordinatorProvider {
-    func add(children: NSViewController, frame: CGRect? = nil) {
+public extension RootViewCoordinatorProvider {
+    public func add(children: NSViewController, frame: CGRect? = nil) {
         // Add Child View Controller
         self.rootViewController.addChildViewController(children)
         
@@ -24,7 +24,7 @@ extension RootViewCoordinatorProvider {
         children.view.frame = frame ?? self.rootViewController.view.bounds
     }
     
-    func remove(children: NSViewController) {
+    public func remove(children: NSViewController) {
         // Remove Child View From Superview
         children.view.removeFromSuperview()
         
@@ -33,4 +33,4 @@ extension RootViewCoordinatorProvider {
     }
 }
 
-typealias RootViewCoordinator = Coordinator & RootViewCoordinatorProvider
+public protocol RootViewCoordinator: Coordinator, RootViewCoordinatorProvider { }

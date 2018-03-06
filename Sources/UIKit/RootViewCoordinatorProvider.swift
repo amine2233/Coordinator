@@ -12,8 +12,8 @@ public protocol RootViewCoordinatorProvider: class {
     var rootViewController: UIViewController { get }
 }
 
-extension RootViewCoordinatorProvider {
-    func add(children: UIViewController, frame: CGRect? = nil) {
+public extension RootViewCoordinatorProvider {
+    public func add(children: UIViewController, frame: CGRect? = nil) {
         // Add Child View Controller
         self.rootViewController.addChildViewController(children)
         
@@ -28,7 +28,7 @@ extension RootViewCoordinatorProvider {
         children.didMove(toParentViewController: self.rootViewController)
     }
     
-    func remove(children: UIViewController) {
+    public func remove(children: UIViewController) {
         // Notify Child View Controller
         children.willMove(toParentViewController: nil)
         
@@ -39,15 +39,15 @@ extension RootViewCoordinatorProvider {
         children.removeFromParentViewController()
     }
     
-    func present(to viewController: UIViewController, animated: Bool = true, completion: (()->Swift.Void)? = nil ) {
+    public func present(to viewController: UIViewController, animated: Bool = true, completion: (()->Swift.Void)? = nil ) {
         self.rootViewController.present(viewController, animated: animated, completion: completion)
     }
     
-    func push(to viewController: UIViewController, animated: Bool = true) {
+    public func push(to viewController: UIViewController, animated: Bool = true) {
         self.rootViewController.navigationController?.pushViewController(viewController, animated: animated)
     }
     
-    func pop(to viewController: UIViewController? = nil, animated: Bool = true) {
+    public func pop(to viewController: UIViewController? = nil, animated: Bool = true) {
         if let viewController = viewController {
             self.rootViewController.navigationController?.popToViewController(viewController, animated: animated)
         } else {
@@ -55,9 +55,9 @@ extension RootViewCoordinatorProvider {
         }
     }
     
-    func popToRoot(animated: Bool = true) {
+    public func popToRoot(animated: Bool = true) {
         self.rootViewController.navigationController?.popToRootViewController(animated: animated)
     }
 }
 
-typealias RootViewCoordinator = Coordinator & RootViewCoordinatorProvider
+public protocol RootViewCoordinator: Coordinator, RootViewCoordinatorProvider { }
