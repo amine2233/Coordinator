@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "67386870204E6AF700BF8D0E"
-               BuildableName = "Coordinator_macOS.framework"
+               BuildableName = "Coordinator.framework"
                BlueprintName = "Coordinator macOS"
                ReferencedContainer = "container:Coordinator.xcodeproj">
             </BuildableReference>
@@ -34,7 +34,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "67386878204E6AF700BF8D0E"
-               BuildableName = "Coordinator macOSTests.xctest"
+               BuildableName = "CoordinatorTests.xctest"
                BlueprintName = "Coordinator macOSTests"
                ReferencedContainer = "container:Coordinator.xcodeproj">
             </BuildableReference>
@@ -44,7 +44,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "67386870204E6AF700BF8D0E"
-            BuildableName = "Coordinator_macOS.framework"
+            BuildableName = "Coordinator.framework"
             BlueprintName = "Coordinator macOS"
             ReferencedContainer = "container:Coordinator.xcodeproj">
          </BuildableReference>
@@ -67,7 +67,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "67386870204E6AF700BF8D0E"
-            BuildableName = "Coordinator_macOS.framework"
+            BuildableName = "Coordinator.framework"
             BlueprintName = "Coordinator macOS"
             ReferencedContainer = "container:Coordinator.xcodeproj">
          </BuildableReference>
@@ -85,7 +85,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "67386870204E6AF700BF8D0E"
-            BuildableName = "Coordinator_macOS.framework"
+            BuildableName = "Coordinator.framework"
             BlueprintName = "Coordinator macOS"
             ReferencedContainer = "container:Coordinator.xcodeproj">
          </BuildableReference>
