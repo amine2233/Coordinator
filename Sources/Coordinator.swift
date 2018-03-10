@@ -17,12 +17,12 @@ public protocol Coordinator: class {
 public extension Coordinator {
     
     /// Add a child coordinator to the parent
-    public func addChildCoordinator(childCoordinator: Coordinator) {
+    public func add(childCoordinator: Coordinator) {
         self.childCoordinators.append(childCoordinator)
     }
     
     /// Remove a child coordinator from the parent
-    public func removeChildCoordinator(childCoordinator: Coordinator) {
+    public func remove(childCoordinator: Coordinator) {
         self.childCoordinators = self.childCoordinators.filter { $0 !== childCoordinator }
     }
 }
