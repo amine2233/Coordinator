@@ -15,7 +15,7 @@ public protocol RootViewCoordinatorProvider: class {
 public extension RootViewCoordinatorProvider {
     
     /// Add view controller in rootViewController
-    public func add(children: UIViewController, completion: (() -> Swift.Void)? = nil, bounds: CGRect? = nil) {
+    public func add(children: UIViewController, bounds: CGRect? = nil, completion: (() -> Swift.Void)? = nil) {
         // Add Child View Controller
         self.rootViewController.addChildViewController(children)
         
@@ -49,7 +49,7 @@ public extension RootViewCoordinatorProvider {
     }
     
     /// Present view controller in rootViewController
-    public func present(to viewController: UIViewController, animated: Bool = true, completion: (()->Swift.Void)? = nil ) {
+    public func present(to viewController: UIViewController, animated: Bool = true, completion: (()->Swift.Void)? = nil) {
         self.rootViewController.present(viewController, animated: animated, completion: completion)
     }
     
@@ -76,7 +76,7 @@ public extension RootViewCoordinatorProvider {
 public extension RootViewCoordinatorProvider {
     
     /// Attach view in rootViewController
-    public func attach(children: UIViewController, completion: (() -> Swift.Void)? = nil, bounds: CGRect? = nil) {
+    public func attach(children: UIViewController, bounds: CGRect? = nil, completion: (() -> Swift.Void)? = nil) {
         // Configure Child View
         children.view.frame = bounds ?? self.rootViewController.view.bounds
         
