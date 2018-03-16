@@ -12,6 +12,8 @@ public protocol RootViewCoordinatorProvider: class {
     var rootViewController: NSViewController { get }
 }
 
+public protocol RootViewCoordinator: Coordinator, RootViewCoordinatorProvider { }
+
 public extension RootViewCoordinatorProvider {
     
     /// Add view controller in rootViewController
@@ -19,11 +21,11 @@ public extension RootViewCoordinatorProvider {
         // Add Child View Controller
         self.rootViewController.addChildViewController(children)
         
-        // Add Child View as Subview
-        self.rootViewController.view.addSubview(children.view)
-        
         // Configure Child View
         children.view.frame = bounds ?? self.rootViewController.view.bounds
+        
+        // Add Child View as Subview
+        self.rootViewController.view.addSubview(children.view)
         
         // Run closure
         completion?()
@@ -42,4 +44,20 @@ public extension RootViewCoordinatorProvider {
     }
 }
 
-public protocol RootViewCoordinator: Coordinator, RootViewCoordinatorProvider { }
+/// Extension for add or remove Coordinator
+public extension RootViewCoordinator {
+    
+    /// Add view controller in rootViewController
+    public func add(children: RootViewCoordinator, completion: (() -> Swift.Void)? = nil, bounds: CGRect? = nil) {
+        children.parentRootViewCoordinatorProvider = self
+        self.add(childCoordinator: children)
+        self.add(children: children.rootViewController, completion: completion, bounds: bounds)
+    }
+    
+    /// Remove view controller
+    public func remove(children: RootViewCoordinator, completion: (() -> Swift.Void)? = nil) {
+        children.parentRootViewCoordinatorProvider = nil
+        self.remove(children: children)
+        self.remove(children: children.rootViewController, completion: completion)
+    }
+}

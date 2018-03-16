@@ -12,6 +12,8 @@ public protocol RootViewCoordinatorProvider: class {
     var rootViewController: UIViewController { get }
 }
 
+public protocol RootViewCoordinator: Coordinator, RootViewCoordinatorProvider { }
+
 public extension RootViewCoordinatorProvider {
     
     /// Add view controller in rootViewController
@@ -19,12 +21,12 @@ public extension RootViewCoordinatorProvider {
         // Add Child View Controller
         self.rootViewController.addChildViewController(children)
         
-        // Add Child View as Subview
-        self.rootViewController.view.addSubview(children.view)
-        
         // Configure Child View
         children.view.frame = bounds ?? self.rootViewController.view.bounds
         children.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
+        // Add Child View as Subview
+        self.rootViewController.view.addSubview(children.view)
         
         // Notify Child View Controller
         children.didMove(toParentViewController: self.rootViewController)
@@ -54,22 +56,83 @@ public extension RootViewCoordinatorProvider {
     }
     
     /// Push view controller in rootViewController
-    public func push(to viewController: UIViewController, animated: Bool = true) {
-        self.rootViewController.navigationController?.pushViewController(viewController, animated: animated)
+    public func push(to viewController: UIViewController, animated: Bool = true, completion: (()->Swift.Void)? = nil) {
+        (self.rootViewController as? UINavigationController)?.pushViewController(viewController, animated: animated)
+        // Run Closure
+        completion?()
+    }
+    
+    /// Push view controller in rootViewController
+    public func add(inNavigation viewController: UIViewController, animated: Bool = true, completion: (()->Swift.Void)? = nil) {
+        (self.rootViewController as? UINavigationController)?.viewControllers.append(viewController)
+        // Run Closure
+        completion?()
+    }
+    
+    /// Append view controller in tabbar rootViewController
+    public func add(inTabBar viewController: UIViewController, completion: (()->Swift.Void)? = nil) {
+        if (self.rootViewController as? UITabBarController)?.viewControllers == nil {
+            (self.rootViewController as? UITabBarController)?.viewControllers = []
+        }
+        (self.rootViewController as? UITabBarController)?.viewControllers?.append(viewController)
+        // Run Closure
+        completion?()
+    }
+    
+    /// Append view controller in master splitview rootViewController
+    public func add(inSplitView viewController: UIViewController, completion: (()->Swift.Void)? = nil) {
+        (self.rootViewController as? UISplitViewController)?.viewControllers.append(viewController)
+        // Run Closure
+        completion?()
+    }
+    
+    /// Append view controller in detail splitview rootViewController
+    public func add(inDetailSplitView viewController: UIViewController, completion: (()->Swift.Void)? = nil) {
+        (self.rootViewController as? UISplitViewController)?.showDetailViewController(viewController, sender: self)
+        // Run Closure
+        completion?()
+    }
+    
+    /// Remove view controller in tabbar rootViewController
+    public func remove(fromTabBar viewController: UIViewController, completion: (()->Swift.Void)? = nil) {
+        (self.rootViewController as? UITabBarController)?.remove(viewController: viewController)
+        // Run Closure
+        completion?()
+    }
+    
+    /// Remove view controller in master splitview rootViewController
+    public func remove(fromSplitView viewController: UIViewController, completion: (()->Swift.Void)? = nil) {
+        (self.rootViewController as? UISplitViewController)?.remove(viewController: viewController)
+        // Run Closure
+        completion?()
+    }
+    
+    /// Remove view controller in detail splitview rootViewController
+    public func remove(fromDetailSplitView viewController: UIViewController, completion: (()->Swift.Void)? = nil) {
+        (self.rootViewController as? UISplitViewController)?.remove(childController: viewController)
+        // Run Closure
+        completion?()
     }
     
     /// Pop view controller in an other view controller or only pop view controller
-    public func pop(to viewController: UIViewController? = nil, animated: Bool = true) {
-        if let viewController = viewController {
-            self.rootViewController.navigationController?.popToViewController(viewController, animated: animated)
-        } else {
-            self.rootViewController.navigationController?.popViewController(animated: animated)
-        }
+    public func pop(from viewController: UIViewController, completion: (()->Swift.Void)? = nil) {
+        (self.rootViewController as? UINavigationController)?.remove(viewController: viewController)
+        // Run Closure
+        completion?()
+    }
+    
+    /// Pop & remove all childs view controller in an other view controller or only pop view controller
+    public func popRemoveAll(completion: (()->Swift.Void)? = nil) {
+        (self.rootViewController as? UINavigationController)?.viewControllers.removeAll()
+        // Run Closure
+        completion?()
     }
     
     /// Pop to root view controller
-    public func popToRoot(animated: Bool = true) {
-        self.rootViewController.navigationController?.popToRootViewController(animated: animated)
+    public func popToRoot(completion: (()->Swift.Void)? = nil) {
+        (self.rootViewController as? UINavigationController)?.viewControllers.remove(at: 0)
+        // Run Closure
+        completion?()
     }
 }
 
@@ -98,4 +161,56 @@ public extension RootViewCoordinatorProvider {
     }
 }
 
-public protocol RootViewCoordinator: Coordinator, RootViewCoordinatorProvider { }
+public extension RootViewCoordinator {
+    /// Add coordinator in root coordinator
+    public func add(coordinator: RootViewCoordinator, bounds: CGRect? = nil, completion: (() -> Swift.Void)? = nil) {
+        coordinator.parentRootViewCoordinatorProvider = self
+        self.add(childCoordinator: coordinator)
+        self.add(children: coordinator.rootViewController, bounds: bounds, completion: completion)
+    }
+    
+    /// Remove coordinator
+    public func remove(coordinator: RootViewCoordinator, completion: (() -> Swift.Void)? = nil) {
+        coordinator.parentRootViewCoordinatorProvider = nil
+        self.remove(childCoordinator: coordinator)
+        self.remove(children: coordinator.rootViewController, completion: completion)
+    }
+    
+    /// Present view controller in rootViewController
+    public func present(coordinator: RootViewCoordinator, animated: Bool = true, completion: (()->Swift.Void)? = nil) {
+        coordinator.parentRootViewCoordinatorProvider = self
+        self.add(childCoordinator: coordinator)
+        self.present(to: coordinator.rootViewController, animated: animated, completion: completion)
+    }
+    
+    public func dismiss(coordinator: RootViewCoordinator, animated: Bool = true, completion: (()->Swift.Void)? = nil) {
+        coordinator.parentRootViewCoordinatorProvider = nil
+        self.remove(childCoordinator: coordinator)
+        coordinator.rootViewController.dismiss(animated: animated, completion: completion)
+    }
+    
+    /// Push coordinator in rootViewController
+    public func addFromNavigation(to coordinator: RootViewCoordinator, animated: Bool = true, completion: (()->Swift.Void)? = nil) {
+        coordinator.parentRootViewCoordinatorProvider = self
+        self.add(childCoordinator: coordinator)
+        self.push(to: coordinator.rootViewController, animated: animated, completion: completion)
+    }
+}
+
+extension RootViewCoordinator {
+    internal func remove(viewController: UIViewController, isChild: Bool = false) {
+        if viewController is UINavigationController {
+            (self.rootViewController as? UINavigationController)?.remove(viewController: viewController)
+
+        } else if viewController is UITabBarController {
+            (self.rootViewController as? UITabBarController)?.remove(viewController: viewController)
+        } else if viewController is UISplitViewController {
+            if isChild {
+                (self.rootViewController as? UISplitViewController)?.remove(childController: viewController)
+            } else {
+                (self.rootViewController as? UISplitViewController)?.remove(viewController: viewController)
+            }
+        }
+    }
+}
+
