@@ -16,28 +16,39 @@ public protocol RootViewCoordinator: Coordinator, RootViewCoordinatorProvider { 
 
 public extension RootViewCoordinatorProvider {
     
-    /// Add view controller in rootViewController
-    public func add(children: NSViewController, completion: (() -> Swift.Void)? = nil, bounds: CGRect? = nil) {
+    /**
+     Add children view controller in rootViewController coordinator
+     
+     - Parameter viewController: View controller will add in rootViewController of coordinator
+     - Parameter bounds: Size of view in view of rootViewController coodrinator
+     - Parameter completion: completion run after add children view controller
+     */
+    public func addChildrenViewController(_ viewController: NSViewController, bounds: CGRect? = nil, completion: (() -> Swift.Void)? = nil) {
         // Add Child View Controller
-        self.rootViewController.addChildViewController(children)
+        self.rootViewController.addChildViewController(viewController)
         
         // Configure Child View
-        children.view.frame = bounds ?? self.rootViewController.view.bounds
+        viewController.view.frame = bounds ?? self.rootViewController.view.bounds
         
         // Add Child View as Subview
-        self.rootViewController.view.addSubview(children.view)
+        self.rootViewController.view.addSubview(viewController.view)
         
         // Run closure
         completion?()
     }
     
-    /// Remove view controller
-    public func remove(children: NSViewController, completion: (() -> Swift.Void)? = nil) {
+    /**
+     Remove children view controller in rootViewController
+     
+     - Parameter viewController: View controller will removed in rootViewController of coordinator
+     - Parameter completion: completion run after remove children view controller
+     */
+    public func removeChildrenViewController(_ viewController: NSViewController, completion: (() -> Swift.Void)? = nil) {
         // Remove Child View From Superview
-        children.view.removeFromSuperview()
+        viewController.view.removeFromSuperview()
         
         // Notify Child View Controller
-        children.removeFromParentViewController()
+        viewController.removeFromParentViewController()
         
         // Run completion
         completion?()
@@ -47,17 +58,28 @@ public extension RootViewCoordinatorProvider {
 /// Extension for add or remove Coordinator
 public extension RootViewCoordinator {
     
-    /// Add view controller in rootViewController
-    public func add(children: RootViewCoordinator, completion: (() -> Swift.Void)? = nil, bounds: CGRect? = nil) {
-        children.parentRootViewCoordinatorProvider = self
-        self.add(childCoordinator: children)
-        self.add(children: children.rootViewController, completion: completion, bounds: bounds)
+    /**
+     Attach view of viewController of childrenCoordinator in rootViewController of parentCoordinator,
+     
+     - Parameter childrenCoordinator: childrenCoordinator we will add rootViewController in rootViewController of parent coordinator
+     - Parameter bounds: Size of view in view of rootViewController coodrinator
+     - Parameter completion: completion run after add children view controller
+     */
+    public func addChildrenCoordinator(_ childrenCoordinator: RootViewCoordinator, bounds: CGRect? = nil, completion: (() -> Swift.Void)? = nil) {
+        childrenCoordinator.parentRootViewCoordinatorProvider = self
+        self.add(childrenCoordinator)
+        self.addChildrenViewController(childrenCoordinator.rootViewController, bounds: bounds, completion: completion)
     }
     
-    /// Remove view controller
-    public func remove(children: RootViewCoordinator, completion: (() -> Swift.Void)? = nil) {
-        children.parentRootViewCoordinatorProvider = nil
-        self.remove(children: children)
-        self.remove(children: children.rootViewController, completion: completion)
+    /**
+     Remove rootViewController of coordinator in parent rootViewController coordinator,
+     
+     - Parameter childrenCoordinator: childrenCoordinator we will remove rootViewController in rootViewController parent coordinator
+     - Parameter completion: completion run after add children view controller
+     */
+    public func removeChildrenCoordinator(_ childrenCoordinator: RootViewCoordinator, completion: (() -> Swift.Void)? = nil) {
+        childrenCoordinator.parentRootViewCoordinatorProvider = nil
+        self.remove(childrenCoordinator)
+        self.removeChildrenViewController(childrenCoordinator.rootViewController, completion: completion)
     }
 }

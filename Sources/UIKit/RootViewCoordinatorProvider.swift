@@ -16,8 +16,14 @@ public protocol RootViewCoordinator: Coordinator, RootViewCoordinatorProvider { 
 
 public extension RootViewCoordinatorProvider {
     
-    /// Add view controller in rootViewController
-    public func add(children: UIViewController, bounds: CGRect? = nil, completion: (() -> Swift.Void)? = nil) {
+    /**
+     Add children view controller in rootViewController coordinator
+     
+     - Parameter children: View controller will add in rootViewController of coordinator
+     - Parameter bounds: Size of view in view of rootViewController coodrinator
+     - Parameter completion: completion run after add children view controller
+     */
+    public func addChildren(_ children: UIViewController, bounds: CGRect? = nil, completion: (() -> Swift.Void)? = nil) {
         // Add Child View Controller
         self.rootViewController.addChildViewController(children)
         
@@ -35,8 +41,13 @@ public extension RootViewCoordinatorProvider {
         completion?()
     }
     
-    /// Remove view controller
-    public func remove(children: UIViewController, completion: (() -> Swift.Void)? = nil) {
+    /**
+     Remove children view controller in rootViewController
+     
+     - Parameter children: View controller will removed in rootViewController of coordinator
+     - Parameter completion: completion run after remove children view controller
+     */
+    public func removeChildren(_ children: UIViewController, completion: (() -> Swift.Void)? = nil) {
         // Notify Child View Controller
         children.willMove(toParentViewController: nil)
         
@@ -50,27 +61,62 @@ public extension RootViewCoordinatorProvider {
         completion?()
     }
     
-    /// Present view controller in rootViewController
-    public func present(to viewController: UIViewController, animated: Bool = true, completion: (()->Swift.Void)? = nil) {
+    /**
+     Present view controller in rootViewController of coordinator
+     
+     - Parameter viewController: View controller will add in rootViewController of coordinator
+     - Parameter animated: Pass true to animate the presentation; otherwise, pass false.
+     - Parameter completion: completion run after add children view controller
+     */
+    public func presentRootViewController(to viewController: UIViewController, animated: Bool = true, completion: (()->Swift.Void)? = nil) {
         self.rootViewController.present(viewController, animated: animated, completion: completion)
     }
     
-    /// Push view controller in rootViewController
-    public func push(to viewController: UIViewController, animated: Bool = true, completion: (()->Swift.Void)? = nil) {
+    /**
+     Dismiss view controller in rootViewController
+     
+     - Parameter to: View controller will removed in rootViewController of coordinator with dismiss method
+     - Parameter completion: completion run after remove children view controller
+     */
+    public func dismissRootViewController(to viewController: UIViewController, animated: Bool = true, completion: (()->Swift.Void)? = nil) {
+        viewController.dismiss(animated: animated, completion: completion)
+    }
+    
+    /**
+     Push view controller in stack of navigation rootViewController,
+     Only when rootViewController is `UINavigationController`
+     
+     - Parameter viewController: View controller will add in rootViewController of coordinator
+     - Parameter animated: Pass true to animate the presentation; otherwise, pass false.
+     - Parameter completion: completion run after add children view controller
+     */
+    public func pushRootViewController(to viewController: UIViewController, animated: Bool = true, completion: (()->Swift.Void)? = nil) {
         (self.rootViewController as? UINavigationController)?.pushViewController(viewController, animated: animated)
         // Run Closure
         completion?()
     }
     
-    /// Push view controller in rootViewController
-    public func add(inNavigation viewController: UIViewController, animated: Bool = true, completion: (()->Swift.Void)? = nil) {
+    /**
+     Add view controller in stack controllers of navigation rootViewController,
+     Only when rootViewController is `UINavigationController`
+     
+     - Parameter viewController: View controller will add in stack of rootViewController of coordinator
+     - Parameter completion: completion run after add children view controller
+     */
+    public func addInNavigation(_ viewController: UIViewController, completion: (()->Swift.Void)? = nil) {
         (self.rootViewController as? UINavigationController)?.viewControllers.append(viewController)
         // Run Closure
         completion?()
     }
     
-    /// Append view controller in tabbar rootViewController
-    public func add(inTabBar viewController: UIViewController, completion: (()->Swift.Void)? = nil) {
+    /**
+     Add view controller in stack controllers of tabbar rootViewController,
+     Only when rootViewController is `UITabBarController`
+     
+     - Parameter viewController: View controller will add in stack of rootViewController of coordinator
+     - Parameter completion: completion run after add children view controller
+     */
+    public func addInTabBar(_ viewController: UIViewController, completion: (()->Swift.Void)? = nil) {
         if (self.rootViewController as? UITabBarController)?.viewControllers == nil {
             (self.rootViewController as? UITabBarController)?.viewControllers = []
         }
@@ -79,58 +125,92 @@ public extension RootViewCoordinatorProvider {
         completion?()
     }
     
-    /// Append view controller in master splitview rootViewController
-    public func add(inSplitView viewController: UIViewController, completion: (()->Swift.Void)? = nil) {
+    /**
+     Add view controller in stack controllers of splitview rootViewController,
+     Only when rootViewController is `UISplitViewController`
+     
+     - Parameter viewController: View controller will add in stack of rootViewController of coordinator
+     - Parameter completion: completion run after add children view controller
+     */
+    public func addInSplitView(_ viewController: UIViewController, completion: (()->Swift.Void)? = nil) {
         (self.rootViewController as? UISplitViewController)?.viewControllers.append(viewController)
         // Run Closure
         completion?()
     }
     
-    /// Append view controller in detail splitview rootViewController
-    public func add(inDetailSplitView viewController: UIViewController, completion: (()->Swift.Void)? = nil) {
+    /**
+     Add view controller in master of splitview rootViewController,
+     Only when rootViewController is `UISplitViewController`
+     
+     - Parameter viewController: View controller will add in stack of rootViewController of coordinator
+     - Parameter completion: completion run after add children view controller
+     */
+    public func showInSplitView(_ viewController: UIViewController, completion: (()->Swift.Void)? = nil) {
+        (self.rootViewController as? UISplitViewController)?.show(viewController, sender: self)
+        // Run Closure
+        completion?()
+    }
+    
+    /**
+     Add view controller in detail of splitview rootViewController,
+     Only when rootViewController is `UISplitViewController`
+     
+     - Parameter viewController: View controller will add in stack of rootViewController of coordinator
+     - Parameter completion: completion run after add children view controller
+     */
+    public func showInDetailSplitView(_ viewController: UIViewController, completion: (()->Swift.Void)? = nil) {
         (self.rootViewController as? UISplitViewController)?.showDetailViewController(viewController, sender: self)
         // Run Closure
         completion?()
     }
     
-    /// Remove view controller in tabbar rootViewController
-    public func remove(fromTabBar viewController: UIViewController, completion: (()->Swift.Void)? = nil) {
-        (self.rootViewController as? UITabBarController)?.remove(viewController: viewController)
+    /**
+     Remove view controller from tabbar in rootViewController
+     Only when rootViewController is `UITabBarController`
+
+     - Parameter to: View controller will removed in rootViewController of coordinator with dismiss method
+     - Parameter completion: completion run after remove children view controller
+     */
+    public func removeFromTabBar(_ viewController: UIViewController, completion: (()->Swift.Void)? = nil) {
+        (self.rootViewController as? UITabBarController)?.removeViewController(viewController)
         // Run Closure
         completion?()
     }
     
-    /// Remove view controller in master splitview rootViewController
-    public func remove(fromSplitView viewController: UIViewController, completion: (()->Swift.Void)? = nil) {
-        (self.rootViewController as? UISplitViewController)?.remove(viewController: viewController)
+    /**
+     Remove view controller from splitView in rootViewController
+     Only when rootViewController is `UISplitViewController`
+     
+     - Parameter to: View controller will removed in rootViewController of coordinator with dismiss method
+     - Parameter completion: completion run after remove children view controller
+     */
+    public func removeFromSplitView(_ viewController: UIViewController, completion: (()->Swift.Void)? = nil) {
+        (self.rootViewController as? UISplitViewController)?.removeViewController(viewController)
         // Run Closure
         completion?()
     }
     
-    /// Remove view controller in detail splitview rootViewController
-    public func remove(fromDetailSplitView viewController: UIViewController, completion: (()->Swift.Void)? = nil) {
-        (self.rootViewController as? UISplitViewController)?.remove(childController: viewController)
+    /**
+     Remove view controller in stack of viewcontrollers of UINavigationController in rootViewController
+     Only when rootViewController is `UINavigationController`
+     
+     - Parameter from: View controller will removed in rootViewController of coordinator with dismiss method
+     - Parameter completion: completion run after remove children view controller
+     */
+    public func popRemoveLast(from viewController: UIViewController, completion: (()->Swift.Void)? = nil) {
+        (self.rootViewController as? UINavigationController)?.removeViewController(viewController)
         // Run Closure
         completion?()
     }
     
-    /// Pop view controller in an other view controller or only pop view controller
-    public func pop(from viewController: UIViewController, completion: (()->Swift.Void)? = nil) {
-        (self.rootViewController as? UINavigationController)?.remove(viewController: viewController)
-        // Run Closure
-        completion?()
-    }
-    
-    /// Pop & remove all childs view controller in an other view controller or only pop view controller
+    /**
+     Remove all viewControllers from UINavigationController in rootViewController
+     Only when rootViewController is `UINavigationController`
+     
+     - Parameter completion: completion run after remove children view controller
+     */
     public func popRemoveAll(completion: (()->Swift.Void)? = nil) {
         (self.rootViewController as? UINavigationController)?.viewControllers.removeAll()
-        // Run Closure
-        completion?()
-    }
-    
-    /// Pop to root view controller
-    public func popToRoot(completion: (()->Swift.Void)? = nil) {
-        (self.rootViewController as? UINavigationController)?.viewControllers.remove(at: 0)
         // Run Closure
         completion?()
     }
@@ -138,23 +218,34 @@ public extension RootViewCoordinatorProvider {
 
 public extension RootViewCoordinatorProvider {
     
-    /// Attach view in rootViewController
-    public func attach(children: UIViewController, bounds: CGRect? = nil, completion: (() -> Swift.Void)? = nil) {
+    /**
+     Attach view of viewController in rootViewController,
+     
+     - Parameter viewController: View controller will add in rootViewController of coordinator
+     - Parameter bounds: Size of view in view of rootViewController coodrinator
+     - Parameter completion: completion run after add children view controller
+     */
+    public func attachChildrenView(_ viewController: UIViewController, bounds: CGRect? = nil, completion: (() -> Swift.Void)? = nil) {
         // Configure Child View
-        children.view.frame = bounds ?? self.rootViewController.view.bounds
+        viewController.view.frame = bounds ?? self.rootViewController.view.bounds
         
         // Add a view in parent view
-        self.rootViewController.view.addSubview(children.view)
-        self.rootViewController.view.bringSubview(toFront: children.view)
+        self.rootViewController.view.addSubview(viewController.view)
+        self.rootViewController.view.bringSubview(toFront: viewController.view)
         
         // Run closure
         completion?()
     }
     
-    /// Dettach view in rootViewController
-    public func detach(children: UIViewController, completion: (() -> Swift.Void)? = nil) {
+    /**
+     Dettach view of viewController in rootViewController,
+     
+     - Parameter viewController: View controller will add in rootViewController of coordinator
+     - Parameter completion: completion run after add children view controller
+     */
+    public func detachChildrenView(_ viewController: UIViewController, completion: (() -> Swift.Void)? = nil) {
         // remove a view in parent view
-        children.view.removeFromSuperview()
+        viewController.view.removeFromSuperview()
         
         // Run closure
         completion?()
@@ -162,55 +253,56 @@ public extension RootViewCoordinatorProvider {
 }
 
 public extension RootViewCoordinator {
-    /// Add coordinator in root coordinator
-    public func add(coordinator: RootViewCoordinator, bounds: CGRect? = nil, completion: (() -> Swift.Void)? = nil) {
-        coordinator.parentRootViewCoordinatorProvider = self
-        self.add(childCoordinator: coordinator)
-        self.add(children: coordinator.rootViewController, bounds: bounds, completion: completion)
+    
+    /**
+     Attach view of viewController of childrenCoordinator in rootViewController of parentCoordinator,
+     
+     - Parameter childrenCoordinator: childrenCoordinator we will add rootViewController in rootViewController of parent coordinator
+     - Parameter bounds: Size of view in view of rootViewController coodrinator
+     - Parameter completion: completion run after add children view controller
+     */
+    public func addChildrenCoordinator(_ childrenCoordinator: RootViewCoordinator, bounds: CGRect? = nil, completion: (() -> Swift.Void)? = nil) {
+        childrenCoordinator.parentRootViewCoordinatorProvider = self
+        self.add(childrenCoordinator)
+        self.addChildren(childrenCoordinator.rootViewController, bounds: bounds, completion: completion)
     }
     
-    /// Remove coordinator
-    public func remove(coordinator: RootViewCoordinator, completion: (() -> Swift.Void)? = nil) {
-        coordinator.parentRootViewCoordinatorProvider = nil
-        self.remove(childCoordinator: coordinator)
-        self.remove(children: coordinator.rootViewController, completion: completion)
+    /**
+     Remove rootViewController of coordinator in parent rootViewController coordinator,
+     
+     - Parameter childrenCoordinator: childrenCoordinator we will remove rootViewController in rootViewController parent coordinator
+     - Parameter completion: completion run after add children view controller
+     */
+    public func removeChildrenCoordinator(_ childrenCoordinator: RootViewCoordinator, completion: (() -> Swift.Void)? = nil) {
+        childrenCoordinator.parentRootViewCoordinatorProvider = nil
+        self.remove(childrenCoordinator)
+        self.removeChildren(childrenCoordinator.rootViewController, completion: completion)
     }
     
-    /// Present view controller in rootViewController
-    public func present(coordinator: RootViewCoordinator, animated: Bool = true, completion: (()->Swift.Void)? = nil) {
-        coordinator.parentRootViewCoordinatorProvider = self
-        self.add(childCoordinator: coordinator)
-        self.present(to: coordinator.rootViewController, animated: animated, completion: completion)
+    /**
+     Present view of viewController of childrenCoordinator in rootViewController of parentCoordinator,
+     
+     - Parameter childrenCoordinator: coordinator we will add rootViewController in parent rootViewController coordinator
+     - Parameter animated: Pass true to animate the presentation; otherwise, pass false.
+     - Parameter completion: completion run after add children view controller
+     */
+    public func presentRootViewControllerCoordinator(_ childrenCoordinator: RootViewCoordinator, animated: Bool = true, completion: (()->Swift.Void)? = nil) {
+        childrenCoordinator.parentRootViewCoordinatorProvider = self
+        self.add(childrenCoordinator)
+        self.presentRootViewController(to: childrenCoordinator.rootViewController, animated: animated, completion: completion)
     }
     
-    public func dismiss(coordinator: RootViewCoordinator, animated: Bool = true, completion: (()->Swift.Void)? = nil) {
-        coordinator.parentRootViewCoordinatorProvider = nil
-        self.remove(childCoordinator: coordinator)
-        coordinator.rootViewController.dismiss(animated: animated, completion: completion)
-    }
-    
-    /// Push coordinator in rootViewController
-    public func addFromNavigation(to coordinator: RootViewCoordinator, animated: Bool = true, completion: (()->Swift.Void)? = nil) {
-        coordinator.parentRootViewCoordinatorProvider = self
-        self.add(childCoordinator: coordinator)
-        self.push(to: coordinator.rootViewController, animated: animated, completion: completion)
-    }
-}
-
-extension RootViewCoordinator {
-    internal func remove(viewController: UIViewController, isChild: Bool = false) {
-        if viewController is UINavigationController {
-            (self.rootViewController as? UINavigationController)?.remove(viewController: viewController)
-
-        } else if viewController is UITabBarController {
-            (self.rootViewController as? UITabBarController)?.remove(viewController: viewController)
-        } else if viewController is UISplitViewController {
-            if isChild {
-                (self.rootViewController as? UISplitViewController)?.remove(childController: viewController)
-            } else {
-                (self.rootViewController as? UISplitViewController)?.remove(viewController: viewController)
-            }
-        }
+    /**
+     Dismiss view of viewController of childrenCoordinator in rootViewController of parentCoordinator,
+     
+     - Parameter childrenCoordinator: coordinator we will dismiss rootViewController in parent rootViewController coordinator
+     - Parameter animated: Pass true to animate the presentation; otherwise, pass false.
+     - Parameter completion: completion run after add children view controller
+     */
+    public func dismissRootViewControllerCoordinator(_ childrenCoordinator: RootViewCoordinator, animated: Bool = true, completion: (()->Swift.Void)? = nil) {
+        childrenCoordinator.parentRootViewCoordinatorProvider = nil
+        self.remove(childrenCoordinator)
+        childrenCoordinator.rootViewController.dismiss(animated: animated, completion: completion)
     }
 }
 
