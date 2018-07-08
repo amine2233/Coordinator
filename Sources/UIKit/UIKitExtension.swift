@@ -1,7 +1,8 @@
+#if canImport(UIKit)
 import UIKit
 
+#if !os(watchOS)
 extension UINavigationController {
-    
     /// Removes and returns the viewController.
     ///
     /// All the viewController following the specified position are moved up to
@@ -14,15 +15,14 @@ extension UINavigationController {
     /// - Complexity: O(*n*), where *n* is the length of the array.
     @discardableResult
     public func removeViewController(_ viewController: UIViewController) -> UIViewController? {
-        if let index = self.viewControllers.index(where: { return $0 === viewController }) {
-            return self.viewControllers.remove(at: index)
+        if let index = self.viewControllers.index(where: { $0 === viewController }) {
+            return viewControllers.remove(at: index)
         }
         return nil
     }
 }
 
 extension UITabBarController {
-    
     /// Removes and returns the viewController.
     ///
     /// All the viewController following the specified position are moved up to
@@ -35,15 +35,14 @@ extension UITabBarController {
     /// - Complexity: O(*n*), where *n* is the length of the array.
     @discardableResult
     public func removeViewController(_ viewController: UIViewController) -> UIViewController? {
-        if let index = self.viewControllers?.index(where: { return $0 === viewController }) {
-            return self.viewControllers?.remove(at: index)
+        if let index = self.viewControllers?.index(where: { $0 === viewController }) {
+            return viewControllers?.remove(at: index)
         }
         return nil
     }
 }
 
 extension UISplitViewController {
-    
     /// Removes and returns the viewController.
     ///
     /// All the viewController following the specified position are moved up to
@@ -56,9 +55,12 @@ extension UISplitViewController {
     /// - Complexity: O(*n*), where *n* is the length of the array.
     @discardableResult
     public func removeViewController(_ viewController: UIViewController) -> UIViewController? {
-        if let index = self.viewControllers.index(where: { return $0 === viewController }) {
-            return self.viewControllers.remove(at: index)
+        if let index = self.viewControllers.index(where: { $0 === viewController }) {
+            return viewControllers.remove(at: index)
         }
         return nil
     }
 }
+#endif
+
+#endif
