@@ -17,7 +17,7 @@ public protocol RootViewCoordinator: Coordinator, RootViewCoordinatorProvider { 
 public extension RootViewCoordinatorProvider {
     
     /// Add view controller in rootViewController
-    public func add(children: NSViewController, completion: (() -> Swift.Void)? = nil, bounds: CGRect? = nil) {
+    public func add(controller children: NSViewController, completion: (() -> Swift.Void)? = nil, bounds: CGRect? = nil) {
         // Add Child View Controller
         self.rootViewController.addChildViewController(children)
         
@@ -32,7 +32,7 @@ public extension RootViewCoordinatorProvider {
     }
     
     /// Remove view controller
-    public func remove(children: NSViewController, completion: (() -> Swift.Void)? = nil) {
+    public func remove(controller children: NSViewController, completion: (() -> Swift.Void)? = nil) {
         // Remove Child View From Superview
         children.view.removeFromSuperview()
         
@@ -48,14 +48,14 @@ public extension RootViewCoordinatorProvider {
 public extension RootViewCoordinator {
     
     /// Add view controller in rootViewController
-    public func add(children: RootViewCoordinator, completion: (() -> Swift.Void)? = nil, bounds: CGRect? = nil) {
+    public func add(to children: RootViewCoordinator, completion: (() -> Swift.Void)? = nil, bounds: CGRect? = nil) {
         children.parentRootViewCoordinatorProvider = self
         self.add(childCoordinator: children)
         self.add(children: children.rootViewController, completion: completion, bounds: bounds)
     }
     
     /// Remove view controller
-    public func remove(children: RootViewCoordinator, completion: (() -> Swift.Void)? = nil) {
+    public func remove(from children: RootViewCoordinator, completion: (() -> Swift.Void)? = nil) {
         children.parentRootViewCoordinatorProvider = nil
         self.remove(children: children)
         self.remove(children: children.rootViewController, completion: completion)

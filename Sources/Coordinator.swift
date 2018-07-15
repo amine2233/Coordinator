@@ -22,13 +22,13 @@ extension Coordinator {
     }
     
     /// Add a child coordinator to the parent
-    public func add(childCoordinator: Coordinator) {
-        self.childCoordinators.append(childCoordinator)
+    public func add(coordinator children: Coordinator) {
+        self.childCoordinators.append(children)
     }
     
     /// Remove a child coordinator from the parent
-    public func remove(childCoordinator: Coordinator) {
-        self.childCoordinators = self.childCoordinators.filter { $0 !== childCoordinator }
+    public func remove(coordinator children: Coordinator) {
+        self.childCoordinators = self.childCoordinators.filter { $0 !== children }
     }
 }
 

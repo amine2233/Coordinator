@@ -13,7 +13,7 @@ extension UINavigationController {
     ///
     /// - Complexity: O(*n*), where *n* is the length of the array.
     @discardableResult
-    public func remove(viewController: UIViewController) -> UIViewController? {
+    public func remove(controller viewController: UIViewController) -> UIViewController? {
         if let index = self.viewControllers.index(where: { return $0 === viewController }) {
             return self.viewControllers.remove(at: index)
         }
@@ -33,7 +33,7 @@ extension UITabBarController {
     ///
     /// - Complexity: O(*n*), where *n* is the length of the array.
     @discardableResult
-    public func remove(viewController: UIViewController) -> UIViewController? {
+    public func remove(controller viewController: UIViewController) -> UIViewController? {
         if let index = self.viewControllers?.index(where: { return $0 === viewController }) {
             return self.viewControllers?.remove(at: index)
         }
@@ -53,7 +53,7 @@ extension UISplitViewController {
     ///
     /// - Complexity: O(*n*), where *n* is the length of the array.
     @discardableResult
-    public func remove(viewController: UIViewController) -> UIViewController? {
+    public func remove(controller viewController: UIViewController) -> UIViewController? {
         if let index = self.viewControllers.index(where: { return $0 === viewController }) {
             return self.viewControllers.remove(at: index)
         }
@@ -71,7 +71,7 @@ extension UISplitViewController {
     ///
     /// - Complexity: O(*n*), where *n* is the length of the array.
     @discardableResult
-    public func remove(childController: UIViewController) -> UIViewController? {
+    public func remove(controller childController: UIViewController) -> UIViewController? {
         if let index = self.childViewControllers.index(where: { return $0 === childController }) {
             return self.viewControllers.remove(at: index)
         }
