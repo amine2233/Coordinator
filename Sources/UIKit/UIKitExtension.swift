@@ -1,7 +1,8 @@
+#if canImport(UIKit)
 import UIKit
 
+#if !os(watchOS)
 extension UINavigationController {
-    
     /// Removes and returns the viewController.
     ///
     /// All the viewController following the specified position are moved up to
@@ -65,16 +66,19 @@ extension UISplitViewController {
     /// All the viewController following the specified position are moved up to
     /// close the gap.
     ///
-    /// - Parameter viewController: The view controller to remove. `viewController` must
+    /// - Parameter childController: The view controller to remove. `viewController` must
     ///   be a valid index of the array.
     /// - Returns: The element or nil.
     ///
     /// - Complexity: O(*n*), where *n* is the length of the array.
     @discardableResult
-    public func remove(controller childController: UIViewController) -> UIViewController? {
+    public func remove(childController: UIViewController) -> UIViewController? {
         if let index = self.childViewControllers.index(where: { return $0 === childController }) {
             return self.viewControllers.remove(at: index)
         }
         return nil
     }
 }
+#endif
+
+#endif

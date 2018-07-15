@@ -1,0 +1,8 @@
+language: objective-c
+xcode_project: Coordinator.xcodeproj
+xcode_scheme: Coordinator
+script:
+    - xcodebuild -project Coordinator.xcodeproj -scheme Coordinator-iOS -destination 'platform=iOS Simulator,OS=11.3,name=iPhone 8' clean build CODE_SIGN_IDENTITY=\"\" CODE_SIGNING_REQUIRED=NO | xcpretty
+    - xcodebuild -project Coordinator.xcodeproj -scheme Coordinator-OSX -destination 'platform=OS X' clean build CODE_SIGN_IDENTITY=\"\" CODE_SIGNING_REQUIRED=NO | xcpretty
+    - xcodebuild -project Coordinator.xcodeproj -scheme Coordinator-tvOS -destination 'platform=tvOS Simulator,OS=11.4,name=Apple TV 1080p' clean build CODE_SIGN_IDENTITY=\"\" CODE_SIGNING_REQUIRED=NO | xcpretty
+    - xcodebuild -project Coordinator.xcodeproj -scheme Coordinator-watchOS -destination 'platform=watchOS Simulator,OS=4.3,name=Apple Watch - 42mm' clean build CODE_SIGN_IDENTITY=\"\" CODE_SIGNING_REQUIRED=NO | xcpretty
