@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 		s.name 				= "Coordinator"
-		s.version 			= "1.2.1"
+		s.version 			= "1.3.0"
 		s.summary         	= "Short description of 'Coordinator' framework"
 	    s.homepage        	= "https://github.com/amine2233/Coordinator"
 	    s.license           = "MIT"
@@ -12,14 +12,6 @@ Pod::Spec.new do |s|
 	    s.requires_arc = true
 	    s.source            = { :git => "https://github.com/amine2233/Coordinator.git", :tag => s.version.to_s }
 	    s.source_files      = "Sources/**/*.swift"
-	    s.pod_target_xcconfig = {
-    		'SWIFT_VERSION' => '4.1'
-  		}
   		s.module_name = s.name
-  		s.swift_version = '4.1'
-
-  		# s.ios.exclude_files = "Sources/AppKit", "Sources/WatchKit"
-  		# s.tvos.exclude_files = "Sources/AppKit", "Sources/WatchKit"
-  		# s.osx.exclude_files = "Sources/UIKit", "Sources/WatchKit"
-  		s.watchos.exclude_files = "Sources/AppKit", "Sources/UIKit"
+  		s.swift_version = '4.2'
 	end

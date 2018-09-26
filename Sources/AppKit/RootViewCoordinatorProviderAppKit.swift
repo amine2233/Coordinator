@@ -11,7 +11,7 @@ public extension RootViewCoordinatorProvider {
      */
     public func add(controller children: NSViewController, bounds: CGRect? = nil, completion: (() -> Swift.Void)? = nil) {
         // Add Child View Controller
-        rootViewController.addChildViewController(children)
+        rootViewController.addChild(children)
         
         // Configure Child View
         children.view.frame = bounds ?? self.rootViewController.view.bounds
@@ -34,7 +34,7 @@ public extension RootViewCoordinatorProvider {
         children.view.removeFromSuperview()
 
         // Notify Child View Controller
-        children.removeFromParentViewController()
+        children.removeFromParent()
 
         // Run completion
         completion?()

@@ -73,7 +73,7 @@ extension UISplitViewController {
     /// - Complexity: O(*n*), where *n* is the length of the array.
     @discardableResult
     public func remove(childController: UIViewController) -> UIViewController? {
-        if let index = self.childViewControllers.index(where: { return $0 === childController }) {
+        if let index = self.children.index(where: { return $0 === childController }) {
             return self.viewControllers.remove(at: index)
         }
         return nil
