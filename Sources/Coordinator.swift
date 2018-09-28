@@ -48,4 +48,11 @@ extension Coordinator where Self: Equatable {
         return lhs.name == rhs.name && lhs.childCoordinators.count == rhs.childCoordinators.count
     }
 }
+
+extension Coordinator where Self: Hashable {
+    /// The hash value.
+    public var hashValue: Int {
+        return name.hashValue
+    }
+}
 #endif

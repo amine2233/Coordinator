@@ -26,6 +26,7 @@
 		673868AC204E6E7500BF8D0E /* RootViewCoordinatorProviderAppKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673868AB204E6E7500BF8D0E /* RootViewCoordinatorProviderAppKit.swift */; };
 		673868B2204E77FC00BF8D0E /* RootViewCoordinatorProviderUIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673868B1204E77FC00BF8D0E /* RootViewCoordinatorProviderUIKit.swift */; };
 		673868B3204E77FC00BF8D0E /* RootViewCoordinatorProviderUIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673868B1204E77FC00BF8D0E /* RootViewCoordinatorProviderUIKit.swift */; };
+		673C54A7215CF65E00FBD117 /* NSViewControllerCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673C54A6215CF65E00FBD117 /* NSViewControllerCoordinator.swift */; };
 		6777211B20FB6A3900EF8EE5 /* RootViewCoordinatorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6777211A20FB6A3900EF8EE5 /* RootViewCoordinatorProvider.swift */; };
 		6777211C20FB6A3900EF8EE5 /* RootViewCoordinatorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6777211A20FB6A3900EF8EE5 /* RootViewCoordinatorProvider.swift */; };
 		6777211D20FB6A3900EF8EE5 /* RootViewCoordinatorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6777211A20FB6A3900EF8EE5 /* RootViewCoordinatorProvider.swift */; };
@@ -72,6 +73,7 @@
 		6738689E204E6DE700BF8D0E /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		673868AB204E6E7500BF8D0E /* RootViewCoordinatorProviderAppKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewCoordinatorProviderAppKit.swift; sourceTree = "<group>"; };
 		673868B1204E77FC00BF8D0E /* RootViewCoordinatorProviderUIKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewCoordinatorProviderUIKit.swift; sourceTree = "<group>"; };
+		673C54A6215CF65E00FBD117 /* NSViewControllerCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSViewControllerCoordinator.swift; sourceTree = "<group>"; };
 		6777211A20FB6A3900EF8EE5 /* RootViewCoordinatorProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewCoordinatorProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -173,6 +175,7 @@
 			children = (
 				6738688C204E6BB100BF8D0E /* CoordinatorTests.swift */,
 				6738688D204E6BB100BF8D0E /* Info.plist */,
+				673C54A6215CF65E00FBD117 /* NSViewControllerCoordinator.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -548,6 +551,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				673C54A7215CF65E00FBD117 /* NSViewControllerCoordinator.swift in Sources */,
 				6738689D204E6D4100BF8D0E /* CoordinatorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

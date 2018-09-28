@@ -50,7 +50,7 @@ public extension RootViewCoordinator {
      - Parameter bounds: Size of view in view of rootViewController coodrinator
      - Parameter completion: completion run after add children view controller
      */
-    public func add(to children: RootViewCoordinator, completion: (() -> Swift.Void)? = nil, bounds: CGRect? = nil)  {
+    public func add(to children: RootViewCoordinator, bounds: CGRect? = nil, completion: (() -> Swift.Void)? = nil)  {
         children.parentRootViewCoordinatorProvider = self
         add(coordinator: children)
         add(controller: children.rootViewController, bounds: bounds, completion: completion)
