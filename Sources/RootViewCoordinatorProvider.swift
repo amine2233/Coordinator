@@ -21,3 +21,27 @@ public protocol RootViewCoordinatorProvider: class {
 
 /// The Root view coordinator, all coordinator must implement this protocol
 public protocol RootViewCoordinator: Coordinator, RootViewCoordinatorProvider {}
+
+extension RootViewCoordinatorProvider where Self: Equatable {
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs.rootViewController == rhs.rootViewController
+    }
+}
+
+extension RootViewCoordinatorProvider where Self: Hashable {
+    public var hashValue: Int {
+        return rootViewController.hashValue
+    }
+}
+
+extension RootViewCoordinator where Self: Equatable {
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs == rhs
+    }
+}
+
+extension RootViewCoordinator where Self: Equatable {
+    public var hashValue: Int {
+        return rootViewController.hashValue + name.hashValue
+    }
+}
