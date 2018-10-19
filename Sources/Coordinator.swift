@@ -3,6 +3,7 @@ import Foundation
 
 /// The Coordinator protocol
 public protocol Coordinator: class {
+    
     /// The cooridnator name
     var name: String { get }
 
@@ -19,7 +20,8 @@ extension Coordinator {
     /**
      Add a child coordinator to the parent
      
-     - Parameter childrenCoordinator: coordinator we will add in parent coordinator
+     - Parameters:
+        - childrenCoordinator: coordinator we will add in parent coordinator
      */
     public func add(coordinator children: Coordinator) {
         self.childCoordinators.append(children)
@@ -28,7 +30,8 @@ extension Coordinator {
     /**
      Remove a child coordinator from the parent
      
-     - Parameter childrenCoordinator: coordinator we will remove in parent coordinator
+     - Parameters:
+        - childrenCoordinator: coordinator we will remove in parent coordinator
      */
     public func remove(coordinator children: Coordinator) {
         self.childCoordinators = self.childCoordinators.filter { $0 !== children }
@@ -36,6 +39,7 @@ extension Coordinator {
 }
 
 extension Coordinator where Self: Equatable {
+    
     /// Returns a Boolean value indicating whether two `Coordinator` are equal.
     ///
     /// Equality is the inverse of inequality. For any values `lhs` and `rhs`,

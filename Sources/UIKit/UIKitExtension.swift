@@ -5,12 +5,13 @@ import UIKit
 extension UINavigationController {
     /// Removes and returns the viewController.
     ///
-    /// All the viewController following the specified position are moved up to
-    /// close the gap.
+    ///     All the viewController following the specified position are moved up to
+    ///     close the gap.
     ///
-    /// - Parameter viewController: The view controller to remove. `viewController` must
-    ///   be a valid index of the array.
-    /// - Returns: The element or nil.
+    /// - Parameters:
+    ///     - viewController: The view controller to remove. `viewController` must be a valid index of the array.
+    /// - Returns:
+    ///     The element or nil.
     ///
     /// - Complexity: O(*n*), where *n* is the length of the array.
     @discardableResult
@@ -25,8 +26,8 @@ extension UINavigationController {
 extension UITabBarController {
     /// Removes and returns the viewController.
     ///
-    /// All the viewController following the specified position are moved up to
-    /// close the gap.
+    ///     All the viewController following the specified position are moved up to
+    ///     close the gap.
     ///
     /// - Parameter viewController: The view controller to remove. `viewController` must
     ///   be a valid index of the array.
@@ -45,8 +46,8 @@ extension UITabBarController {
 extension UISplitViewController {
     /// Removes and returns the viewController.
     ///
-    /// All the viewController following the specified position are moved up to
-    /// close the gap.
+    ///     All the viewController following the specified position are moved up to
+    ///     close the gap.
     ///
     /// - Parameter viewController: The view controller to remove. `viewController` must
     ///   be a valid index of the array.
@@ -63,8 +64,8 @@ extension UISplitViewController {
     
     /// Removes and returns the viewController.
     ///
-    /// All the viewController following the specified position are moved up to
-    /// close the gap.
+    ///     All the viewController following the specified position are moved up to
+    ///     close the gap.
     ///
     /// - Parameter childController: The view controller to remove. `viewController` must
     ///   be a valid index of the array.
