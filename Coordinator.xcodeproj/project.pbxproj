@@ -31,6 +31,8 @@
 		6777211C20FB6A3900EF8EE5 /* RootViewCoordinatorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6777211A20FB6A3900EF8EE5 /* RootViewCoordinatorProvider.swift */; };
 		6777211D20FB6A3900EF8EE5 /* RootViewCoordinatorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6777211A20FB6A3900EF8EE5 /* RootViewCoordinatorProvider.swift */; };
 		6777211E20FB6A3900EF8EE5 /* RootViewCoordinatorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6777211A20FB6A3900EF8EE5 /* RootViewCoordinatorProvider.swift */; };
+		678AD23B217B38170027C7F2 /* RootViewCoordinatorProviderWatchKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678AD23A217B38170027C7F2 /* RootViewCoordinatorProviderWatchKit.swift */; };
+		678AD23D217B39660027C7F2 /* UIViewControllerCoordinatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678AD23C217B39660027C7F2 /* UIViewControllerCoordinatorTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +77,8 @@
 		673868B1204E77FC00BF8D0E /* RootViewCoordinatorProviderUIKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewCoordinatorProviderUIKit.swift; sourceTree = "<group>"; };
 		673C54A6215CF65E00FBD117 /* NSViewControllerCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSViewControllerCoordinator.swift; sourceTree = "<group>"; };
 		6777211A20FB6A3900EF8EE5 /* RootViewCoordinatorProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewCoordinatorProvider.swift; sourceTree = "<group>"; };
+		678AD23A217B38170027C7F2 /* RootViewCoordinatorProviderWatchKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewCoordinatorProviderWatchKit.swift; sourceTree = "<group>"; };
+		678AD23C217B39660027C7F2 /* UIViewControllerCoordinatorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerCoordinatorTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,7 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				673868B0204E77FC00BF8D0E /* UIKit */,
-				673868AA204E6E5C00BF8D0E /* WatchKit */,
+				678AD239217B37EB0027C7F2 /* WatchKit */,
 				673868A4204E6E1C00BF8D0E /* AppKit */,
 				67386889204E6BB100BF8D0E /* Coordinator.h */,
 				6738688A204E6BB100BF8D0E /* Info.plist */,
@@ -176,6 +180,7 @@
 				6738688C204E6BB100BF8D0E /* CoordinatorTests.swift */,
 				6738688D204E6BB100BF8D0E /* Info.plist */,
 				673C54A6215CF65E00FBD117 /* NSViewControllerCoordinator.swift */,
+				678AD23C217B39660027C7F2 /* UIViewControllerCoordinatorTest.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -188,13 +193,6 @@
 			path = AppKit;
 			sourceTree = "<group>";
 		};
-		673868AA204E6E5C00BF8D0E /* WatchKit */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = WatchKit;
-			sourceTree = "<group>";
-		};
 		673868B0204E77FC00BF8D0E /* UIKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -202,6 +200,14 @@
 				672B7525205907CE00A026E5 /* UIKitExtension.swift */,
 			);
 			path = UIKit;
+			sourceTree = "<group>";
+		};
+		678AD239217B37EB0027C7F2 /* WatchKit */ = {
+			isa = PBXGroup;
+			children = (
+				678AD23A217B38170027C7F2 /* RootViewCoordinatorProviderWatchKit.swift */,
+			);
+			path = WatchKit;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -496,6 +502,7 @@
 			files = (
 				673868B2204E77FC00BF8D0E /* RootViewCoordinatorProviderUIKit.swift in Sources */,
 				6738689F204E6DE700BF8D0E /* Coordinator.swift in Sources */,
+				678AD23D217B39660027C7F2 /* UIViewControllerCoordinatorTest.swift in Sources */,
 				6777211B20FB6A3900EF8EE5 /* RootViewCoordinatorProvider.swift in Sources */,
 				672B7526205907CE00A026E5 /* UIKitExtension.swift in Sources */,
 			);
@@ -514,6 +521,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6777211C20FB6A3900EF8EE5 /* RootViewCoordinatorProvider.swift in Sources */,
+				678AD23B217B38170027C7F2 /* RootViewCoordinatorProviderWatchKit.swift in Sources */,
 				673868A0204E6DE700BF8D0E /* Coordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -14,7 +14,7 @@ public protocol Coordinator: class {
 extension Coordinator {
     /// The cooridnator name
     public var name: String {
-        return String(describing: self)
+        return String(describing: self).lastStringComponents(separatedBy: ".")
     }
     
     /**
@@ -57,6 +57,13 @@ extension Coordinator where Self: Hashable {
     /// The hash value.
     public var hashValue: Int {
         return name.hashValue
+    }
+}
+
+extension String {
+    
+    func lastStringComponents(separatedBy character: String) -> String {
+        return self.components(separatedBy: character).last ?? self
     }
 }
 #endif

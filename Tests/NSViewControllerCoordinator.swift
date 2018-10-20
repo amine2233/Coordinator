@@ -27,38 +27,9 @@ class NSViewControllerCoordinator: XCTestCase {
         }
     }
     
-    class TestChildOneCoordinator :NSObject, RootViewCoordinator {
-        var childCoordinators: [Coordinator] = []
-        var parentRootViewCoordinatorProvider: RootViewCoordinatorProvider?
-        var rootViewController: NSViewController = TestViewController()
-        
-        override init() {
-            let frame = CGRect(origin: .zero, size: CGSize(width: 100, height: 100))
-            rootViewController.view.frame = frame
-        }
-    }
-    
-    class TestChildTwoCoordinator :NSObject, RootViewCoordinator {
-        var childCoordinators: [Coordinator] = []
-        var parentRootViewCoordinatorProvider: RootViewCoordinatorProvider?
-        var rootViewController: NSViewController = TestViewController()
-        
-        override init() {
-            let frame = CGRect(origin: .zero, size: CGSize(width: 100, height: 100))
-            rootViewController.view.frame = frame
-        }
-    }
-    
-    class TestChildThreeCoordinator :NSObject, RootViewCoordinator {
-        var childCoordinators: [Coordinator] = []
-        var parentRootViewCoordinatorProvider: RootViewCoordinatorProvider?
-        var rootViewController: NSViewController = TestViewController()
-        
-        override init() {
-            let frame = CGRect(origin: .zero, size: CGSize(width: 100, height: 100))
-            rootViewController.view.frame = frame
-        }
-    }
+    class TestChildOneCoordinator: TestRootCoordinator {}
+    class TestChildTwoCoordinator: TestRootCoordinator {}
+    class TestChildThreeCoordinator: TestRootCoordinator {}
     
     var testRootCoordinator = TestRootCoordinator()
     var testChildOneCoordinator = TestChildOneCoordinator()
@@ -66,11 +37,7 @@ class NSViewControllerCoordinator: XCTestCase {
     var testChildThreeCoordinator = TestChildThreeCoordinator()
 
     override func setUp() {
-        // Add one coordinator
         testRootCoordinator.add(to: testChildOneCoordinator)
-    }
-
-    override func tearDown() {
     }
 
     func testAddCoordinator() {
