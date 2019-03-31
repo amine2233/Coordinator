@@ -4,7 +4,7 @@ import UIKit
 #if !os(watchOS)
 
 /// Extension for add UIViewController in container
-public extension RootViewCoordinatorProvider {
+extension RootViewCoordinatorProvider {
     
     /**
      Add children view controller in rootViewController coordinator
@@ -41,13 +41,13 @@ public extension RootViewCoordinatorProvider {
      */
     public func remove(controller children: UIViewController, completion: (() -> Swift.Void)? = nil) {
         // Notify Child View Controller
-        children.willMove(toParent: nil)
-        
-        // Remove Child View From Superview
-        children.view.removeFromSuperview()
+        children.willMove(toParent: rootViewController)
         
         // Notify Child View Controller
         children.removeFromParent()
+        
+        // Remove Child View From Superview
+        children.view.removeFromSuperview()
         
         // Run Closure
         completion?()
@@ -55,7 +55,7 @@ public extension RootViewCoordinatorProvider {
 }
 
 /// Extension for UIViewController
-public extension RootViewCoordinatorProvider {
+extension RootViewCoordinatorProvider {
     
     /**
      Present view controller in rootViewController of coordinator
@@ -82,7 +82,7 @@ public extension RootViewCoordinatorProvider {
 }
 
 /// Extension for UINavigationController
-public extension RootViewCoordinatorProvider {
+extension RootViewCoordinatorProvider {
     
     /**
      Push view controller in stack of navigation rootViewController,
@@ -160,7 +160,7 @@ public extension RootViewCoordinatorProvider {
 }
 
 /// Extension for UITabBarController
-public extension RootViewCoordinatorProvider {
+extension RootViewCoordinatorProvider {
 
     /**
      Add view controller in stack controllers of tabbar rootViewController,
@@ -197,7 +197,7 @@ public extension RootViewCoordinatorProvider {
 }
 
 /// Extension for UISplitViewController
-public extension RootViewCoordinatorProvider {
+extension RootViewCoordinatorProvider {
 
     /**
      Add view controller in stack controllers of splitview rootViewController,
@@ -246,7 +246,7 @@ public extension RootViewCoordinatorProvider {
 }
 
 /// Extension for add coordinator in an other coordinator
-public extension RootViewCoordinatorProvider {
+extension RootViewCoordinatorProvider {
     /**
      Attach view of viewController in rootViewController,
 
@@ -284,18 +284,18 @@ public extension RootViewCoordinatorProvider {
 }
 
 /// Extension for add coordinator in an other coordinator
-public extension RootViewCoordinator {
+extension RootViewCoordinator {
     /**
      Attach view of viewController of childrenCoordinator in rootViewController of parentCoordinator,
 
      - Parameters:
-        - childrenCoordinator: childrenCoordinator we will add rootViewController in rootViewController of parent coordinator
+        - to: childrenCoordinator we will add rootViewController in rootViewController of parent coordinator
         - bounds: Size of view in view of rootViewController coodrinator
         - completion: completion run after add children view controller
      */
     public func add(to coordinator: RootViewCoordinator, bounds: CGRect? = nil, completion: (() -> Swift.Void)? = nil) {
-        coordinator.parentRootViewCoordinatorProvider = self
         add(coordinator: coordinator)
+        coordinator.parentRootViewCoordinator = self
         add(controller: coordinator.rootViewController, bounds: bounds, completion: completion)
     }
 
@@ -303,18 +303,18 @@ public extension RootViewCoordinator {
      Remove rootViewController of coordinator in parent rootViewController coordinator,
 
      - Parameters:
-        - childrenCoordinator: childrenCoordinator we will remove rootViewController in rootViewController parent coordinator
+        - from: childrenCoordinator we will remove rootViewController in rootViewController parent coordinator
         - completion: completion run after add children view controller
      */
     public func remove(from coordinator: RootViewCoordinator, completion: (() -> Swift.Void)? = nil) {
-        coordinator.parentRootViewCoordinatorProvider = nil
         remove(controller: coordinator.rootViewController, completion: completion)
+        coordinator.parentRootViewCoordinator = nil
         remove(coordinator: coordinator)
     }
 }
 
 /// Extension for add coordinator in an other coordinator
-public extension RootViewCoordinator {
+extension RootViewCoordinator {
 
     /**
      Present view of viewController of childrenCoordinator in rootViewController of parentCoordinator,
@@ -325,7 +325,7 @@ public extension RootViewCoordinator {
         - completion: completion run after add children view controller
      */
     public func present(to coordinator: RootViewCoordinator, animated: Bool = true, completion: (()->Swift.Void)? = nil) {
-        coordinator.parentRootViewCoordinatorProvider = self
+        coordinator.parentRootViewCoordinator = self
         add(coordinator: coordinator)
         present(to: coordinator.rootViewController, animated: animated, completion: completion)
     }
@@ -339,14 +339,14 @@ public extension RootViewCoordinator {
         - completion: completion run after add children view controller
      */
     public func dismiss(from coordinator: RootViewCoordinator, animated: Bool = true, completion: (()->Swift.Void)? = nil) {
-        coordinator.parentRootViewCoordinatorProvider = nil
         coordinator.rootViewController.dismiss(animated: animated, completion: completion)
         remove(coordinator: coordinator)
+        coordinator.parentRootViewCoordinator = nil
     }
 }
 
 /// Extension for add coordinator in an other coordinator
-public extension RootViewCoordinator {
+extension RootViewCoordinator {
     
     /**
      Push viewController of childrenCoordinator in rootViewController of parentCoordinator,
@@ -357,7 +357,7 @@ public extension RootViewCoordinator {
         - completion: completion run after add children view controller
      */
     public func push(to coordinator: RootViewCoordinator, animated: Bool = true, completion: (()->Swift.Void)? = nil) {
-        coordinator.parentRootViewCoordinatorProvider = self
+        coordinator.parentRootViewCoordinator = self
         add(coordinator: coordinator)
         push(to: coordinator.rootViewController, animated: animated, completion: completion)
     }

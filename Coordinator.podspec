@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 		s.name 				= "Coordinator"
-		s.version 			= "1.3.0"
+		s.version 			= "1.4.0"
 		s.summary         	= "Short description of 'Coordinator' framework"
 	    s.homepage        	= "https://github.com/amine2233/Coordinator"
 	    s.license           = "MIT"

@@ -1,7 +1,7 @@
 #if canImport(AppKit)
 import AppKit
 
-public extension RootViewCoordinatorProvider {
+extension RootViewCoordinatorProvider {
     /**
      Add children view controller in rootViewController coordinator
 
@@ -44,7 +44,7 @@ public extension RootViewCoordinatorProvider {
 }
 
 /// Extension for add or remove Coordinator
-public extension RootViewCoordinator {
+extension RootViewCoordinator {
     /**
      Attach view of viewController of childrenCoordinator in rootViewController of parentCoordinator,
 
@@ -54,7 +54,7 @@ public extension RootViewCoordinator {
         - completion: completion run after add children view controller
      */
     public func add(to children: RootViewCoordinator, bounds: CGRect? = nil, completion: (() -> Swift.Void)? = nil)  {
-        children.parentRootViewCoordinatorProvider = self
+        children.parentRootViewCoordinator = self
         add(coordinator: children)
         add(controller: children.rootViewController, bounds: bounds, completion: completion)
     }
@@ -67,7 +67,7 @@ public extension RootViewCoordinator {
         - completion: completion run after add children view controller
      */
     public func remove(from children: RootViewCoordinator, completion: (() -> Swift.Void)? = nil) {
-        children.parentRootViewCoordinatorProvider = nil
+        children.parentRootViewCoordinator = nil
         remove(coordinator: children)
         remove(controller: children.rootViewController, completion: completion)
     }
