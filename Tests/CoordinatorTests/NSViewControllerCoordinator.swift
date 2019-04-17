@@ -15,15 +15,20 @@ class NSViewControllerCoordinator: XCTestCase {
             self.view = NSView()
         }
     }
-
+    
     class TestRootCoordinator : NSObject, RootViewCoordinator {
+        
         var childCoordinators: [Coordinator] = []
-        var parentRootViewCoordinatorProvider: RootViewCoordinatorProvider?
+        var parentRootViewCoordinator: RootViewCoordinator?
         var rootViewController: NSViewController = TestViewController()
         
         override init() {
             let frame = CGRect(origin: .zero, size: CGSize(width: 100, height: 100))
             rootViewController.view.frame = frame
+        }
+        
+        func start(_ completion: (() -> Void)?) {
+            completion?()
         }
     }
     
@@ -35,44 +40,48 @@ class NSViewControllerCoordinator: XCTestCase {
     var testChildOneCoordinator = TestChildOneCoordinator()
     var testChildTwoCoordinator = TestChildTwoCoordinator()
     var testChildThreeCoordinator = TestChildThreeCoordinator()
-
+    
     override func setUp() {
-        testRootCoordinator.add(to: testChildOneCoordinator)
+        testRootCoordinator.addChildCoordinator(testChildOneCoordinator)
     }
-
+    
+    override func tearDown() {
+        testRootCoordinator.removeChildCoordinator(testChildOneCoordinator)
+    }
+    
     func testAddCoordinator() {
         
-        XCTAssertNotNil(testChildOneCoordinator.parentRootViewCoordinatorProvider)
+        XCTAssertNotNil(testChildOneCoordinator.parentRootViewCoordinator)
         XCTAssertEqual(testRootCoordinator.childCoordinators.count, 1)
         XCTAssertTrue(testRootCoordinator.name.contains("TestRootCoordinator"))
-    XCTAssertTrue(testRootCoordinator.isEqual(testChildOneCoordinator.parentRootViewCoordinatorProvider))
+        XCTAssertTrue(testRootCoordinator.isEqual(testChildOneCoordinator.parentRootViewCoordinator))
         
         // Add second coordinator
-        testRootCoordinator.add(to: testChildTwoCoordinator)
+        testRootCoordinator.addChildCoordinator(testChildTwoCoordinator)
         
-        XCTAssertNotNil(testChildTwoCoordinator.parentRootViewCoordinatorProvider)
+        XCTAssertNotNil(testChildTwoCoordinator.parentRootViewCoordinator)
         XCTAssertEqual(testRootCoordinator.childCoordinators.count, 2)
-    XCTAssertTrue(testRootCoordinator.isEqual(testChildTwoCoordinator.parentRootViewCoordinatorProvider))
+        XCTAssertTrue(testRootCoordinator.isEqual(testChildTwoCoordinator.parentRootViewCoordinator))
         
         // Add second coordinator
-        testChildTwoCoordinator.add(to: testChildThreeCoordinator)
+        testChildTwoCoordinator.addChildCoordinator(testChildThreeCoordinator)
         
-        XCTAssertNotNil(testChildThreeCoordinator.parentRootViewCoordinatorProvider)
+        XCTAssertNotNil(testChildThreeCoordinator.parentRootViewCoordinator)
         XCTAssertEqual(testChildTwoCoordinator.childCoordinators.count, 1)
-    XCTAssertTrue(testChildTwoCoordinator.isEqual(testChildThreeCoordinator.parentRootViewCoordinatorProvider))
+        XCTAssertTrue(testChildTwoCoordinator.isEqual(testChildThreeCoordinator.parentRootViewCoordinator))
     }
     
     func testRemoveCoordinator() {
-        testRootCoordinator.remove(from: testChildOneCoordinator)
+        testRootCoordinator.removeChildCoordinator(testChildOneCoordinator)
         
-        XCTAssertNil(testChildOneCoordinator.parentRootViewCoordinatorProvider)
+        XCTAssertNil(testChildOneCoordinator.parentRootViewCoordinator)
         XCTAssertEqual(testRootCoordinator.childCoordinators.count, 0)
     }
     
     func testAddController() {
         // Test adding simple controller
         let controller = TestViewController()
-        testChildThreeCoordinator.add(controller: controller)
+        testChildThreeCoordinator.addChild(controller)
         let frame = CGRect(origin: .zero, size: CGSize(width: 100, height: 100))
         
         XCTAssertNotNil(controller.parent)
@@ -82,8 +91,8 @@ class NSViewControllerCoordinator: XCTestCase {
         // Test adding controller with frame
         let controller2 = TestViewController()
         let frame2 = CGRect(origin: .zero, size: CGSize(width: 50, height: 57))
-
-        testChildThreeCoordinator.add(controller: controller2, bounds: frame2)
+        
+        testChildThreeCoordinator.addChild(controller2, bounds: frame2)
         
         XCTAssertNotNil(controller2.parent)
         XCTAssertEqual(controller2.view.frame, frame2)
@@ -96,7 +105,7 @@ class NSViewControllerCoordinator: XCTestCase {
         let frame3 = CGRect(origin: .zero, size: CGSize(width: 300, height: 27))
         let expectation = self.expectation(description: "Adding")
         
-        testChildThreeCoordinator.add(controller: controller3, bounds: frame3, completion: {
+        testChildThreeCoordinator.addChild(controller3, bounds: frame3, completion: {
             testCompletion = true
             expectation.fulfill()
         })
@@ -112,31 +121,31 @@ class NSViewControllerCoordinator: XCTestCase {
         // Test removing simple controller
         let controller = TestViewController()
         let controller2 = TestViewController()
-        testChildThreeCoordinator.add(controller: controller)
-        testChildThreeCoordinator.add(controller: controller2)
-
+        testChildThreeCoordinator.addChild(controller)
+        testChildThreeCoordinator.addChild(controller2)
+        
         XCTAssertNotNil(controller.parent)
         XCTAssertNotNil(controller2.parent)
         XCTAssertEqual(testChildThreeCoordinator.rootViewController.view.subviews.count, 2)
         
-        testChildThreeCoordinator.remove(controller: controller)
+        testChildThreeCoordinator.removeChild(controller)
         XCTAssertNil(controller.parent)
         XCTAssertEqual(testChildThreeCoordinator.rootViewController.view.subviews.count, 1)
         
         // Test removing controller with completion
         var testCompletion = false
         let expectation = self.expectation(description: "Removing")
-        testChildThreeCoordinator.remove(controller: controller2) {
+        testChildThreeCoordinator.removeChild(controller2) {
             testCompletion = true
             expectation.fulfill()
         }
         waitForExpectations(timeout: 5, handler: nil)
-
+        
         XCTAssertTrue(testCompletion)
         XCTAssertNil(controller2.parent)
         XCTAssertEqual(testChildThreeCoordinator.rootViewController.view.subviews.count, 0)
     }
-
+    
     func testPerformanceExample() {
         // This is an example of a performance test case.
         self.measure {

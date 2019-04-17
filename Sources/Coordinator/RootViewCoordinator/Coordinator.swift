@@ -17,22 +17,19 @@ extension Coordinator {
         return String(describing: self).lastStringComponents(separatedBy: ".")
     }
     
-    /**
-     Add a child coordinator to the parent
-     
-     - Parameters:
-        - childrenCoordinator: coordinator we will add in parent coordinator
-     */
+    /// Add a child coordinator to the parent
+    ///
+    ///  - Parameters:
+    ///     - childrenCoordinator: coordinator we will add in parent coordinator
+    ///
     public func add(coordinator children: Coordinator) {
         self.childCoordinators.append(children)
     }
     
-    /**
-     Remove a child coordinator from the parent
-     
-     - Parameters:
-        - childrenCoordinator: coordinator we will remove in parent coordinator
-     */
+    /// Remove a child coordinator from the parent
+    ///
+    ///  - Parameters:
+    ///     - childrenCoordinator: coordinator we will remove in parent coordinator
     public func remove(coordinator children: Coordinator) {
         self.childCoordinators = self.childCoordinators.filter { $0 !== children }
     }
@@ -54,14 +51,33 @@ extension Coordinator where Self: Equatable {
 }
 
 extension Coordinator where Self: Hashable {
-    /// The hash value.
-    public var hashValue: Int {
-        return name.hashValue
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.name)
+    }
+}
+
+/// Implement CustomDebugString
+extension Coordinator where Self: CustomDebugStringConvertible {
+    
+    /// A textual representation of this instance, suitable for debugging.
+    public var debugDescription: String {
+        return "Coordinator \(name)"
+    }
+}
+
+/// Implement CustomString
+extension Coordinator where Self: CustomStringConvertible {
+    
+    /// A textual representation of this instance.
+    public var description: String {
+        return name
     }
 }
 
 extension String {
     
+    /// Get last String
     func lastStringComponents(separatedBy character: String) -> String {
         return self.components(separatedBy: character).last ?? self
     }

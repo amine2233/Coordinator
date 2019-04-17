@@ -1,0 +1,26 @@
+{
+  "warnings": [
+    {
+      "file": "/Users/bensala/Projects/Exemples/Coordinator/Sources/Coordinator/RootViewCoordinator/Coordinator.swift",
+      "line": 55,
+      "symbol": "Coordinator.hash(into:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/bensala/Projects/Exemples/Coordinator/Sources/Coordinator/RootViewCoordinator/RootViewCoordinatorProvider.swift",
+      "line": 6,
+      "symbol": "ViewController",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/bensala/Projects/Exemples/Coordinator/Sources/Coordinator/RootViewCoordinator/RootViewCoordinatorProviderExtension.swift",
+      "line": 22,
+      "symbol": "RootViewCoordinatorProvider.pageViewController",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    }
+  ],
+  "source_directory": "/Users/bensala/Projects/Exemples/Coordinator"
+}

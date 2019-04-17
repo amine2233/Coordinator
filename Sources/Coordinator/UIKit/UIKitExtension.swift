@@ -16,7 +16,7 @@ extension UINavigationController {
     /// - Complexity: O(*n*), where *n* is the length of the array.
     @discardableResult
     public func remove(controller viewController: UIViewController) -> UIViewController? {
-        if let index = self.viewControllers.index(where: { return $0 === viewController }) {
+        if let index = self.viewControllers.firstIndex(where: { $0 == viewController }) {
             return self.viewControllers.remove(at: index)
         }
         return nil
@@ -36,7 +36,7 @@ extension UITabBarController {
     /// - Complexity: O(*n*), where *n* is the length of the array.
     @discardableResult
     public func remove(controller viewController: UIViewController) -> UIViewController? {
-        if let index = self.viewControllers?.index(where: { return $0 === viewController }) {
+        if let index = self.viewControllers?.firstIndex(where: { $0 == viewController }) {
             return self.viewControllers?.remove(at: index)
         }
         return nil
@@ -56,7 +56,7 @@ extension UISplitViewController {
     /// - Complexity: O(*n*), where *n* is the length of the array.
     @discardableResult
     public func remove(controller viewController: UIViewController) -> UIViewController? {
-        if let index = self.viewControllers.index(where: { return $0 === viewController }) {
+        if let index = self.viewControllers.firstIndex(where: { $0 == viewController }) {
             return self.viewControllers.remove(at: index)
         }
         return nil
@@ -74,12 +74,14 @@ extension UISplitViewController {
     /// - Complexity: O(*n*), where *n* is the length of the array.
     @discardableResult
     public func remove(childController: UIViewController) -> UIViewController? {
-        if let index = self.children.index(where: { return $0 === childController }) {
+        if let index = self.children.firstIndex(where: { $0 == childController }) {
             return self.viewControllers.remove(at: index)
         }
         return nil
     }
 }
+
+extension UIPageViewController { }
 #endif
 
 #endif
