@@ -4,11 +4,12 @@
 //
 //  Created by Amine Bensalah on 27/09/2018.
 //
-
+#if canImport(AppKit)
 import XCTest
 @testable import Coordinator
 
-class NSViewControllerCoordinator: XCTestCase {
+@MainActor
+final class NSViewControllerCoordinator: XCTestCase {
     
     class TestViewController: NSViewController {
         override func loadView() {
@@ -16,7 +17,8 @@ class NSViewControllerCoordinator: XCTestCase {
         }
     }
     
-    class TestRootCoordinator : NSObject, RootViewCoordinator {
+    @MainActor
+    class TestRootCoordinator : NSObject, @MainActor RootViewCoordinator {
         
         var childCoordinators: [Coordinator] = []
         var parentRootViewCoordinator: RootViewCoordinator?
@@ -41,11 +43,11 @@ class NSViewControllerCoordinator: XCTestCase {
     var testChildTwoCoordinator = TestChildTwoCoordinator()
     var testChildThreeCoordinator = TestChildThreeCoordinator()
     
-    override func setUp() {
+    override func setUp() async throws {
         testRootCoordinator.addChildCoordinator(testChildOneCoordinator)
     }
-    
-    override func tearDown() {
+
+    override func tearDown() async throws {
         testRootCoordinator.removeChildCoordinator(testChildOneCoordinator)
     }
     
@@ -153,3 +155,4 @@ class NSViewControllerCoordinator: XCTestCase {
         }
     }
 }
+#endif

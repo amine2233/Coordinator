@@ -4,7 +4,7 @@
 //
 //  Created by BENSALA on 17/04/2019.
 //
-
+#if canImport(UIKit)
 import XCTest
 @testable import Coordinator
 
@@ -238,3 +238,4 @@ extension NSObject {
         return NSStringFromClass(type(of: self)).components(separatedBy: ".").last!
     }
 }
+#endif
